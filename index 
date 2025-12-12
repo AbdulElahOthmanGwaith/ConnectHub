@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عبدالإله غويث</title>
+<style>
+    body {font-family: 'Cairo', sans-serif; margin:0; padding:0; background:#f0f2f5; color:#333; scroll-behavior: smooth;}
+    header {background: linear-gradient(90deg,#4CAF50,#45A049); color:white; text-align:center; padding:40px 20px;}
+    nav {position: sticky; top:0; background:white; display:flex; justify-content:center; padding:10px 0; box-shadow:0 2px 5px rgba(0,0,0,0.1); z-index:1000;}
+    nav a {margin:0 15px; text-decoration:none; color:#4CAF50; font-weight:bold; transition:0.3s;}
+    nav a:hover {color:#2e7d32;}
+    section {max-width:900px; margin:40px auto; padding:30px; background:white; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); opacity:0; transform:translateY(50px); transition:all 0.8s ease-out;}
+    section.visible {opacity:1; transform:translateY(0);}
+    h2 {color:#4CAF50; margin-bottom:15px;}
+    p {margin-bottom:15px;}
+    form {display:flex; flex-direction:column;}
+    input,textarea {margin:10px 0; padding:12px; font-size:16px; border:1px solid #ccc; border-radius:8px; transition:0.3s;}
+    input:focus, textarea:focus {border-color:#4CAF50; outline:none;}
+    button {padding:12px; background:#4CAF50; color:white; border:none; font-size:16px; border-radius:8px; cursor:pointer; transition:0.3s;}
+    button:hover {background:#388E3C;}
+    .social-links {text-align:center; margin-top:20px;}
+    .social-links a {margin:0 10px; text-decoration:none; font-weight:bold; color:#4CAF50; transition:0.3s;}
+    .social-links a:hover {color:#2e7d32;}
+    footer {text-align:center; padding:20px; background:#333; color:white; margin-top:30px;}
+    .hero-image {width:100%; max-height:400px; object-fit:cover; border-radius:15px; margin-bottom:20px;}
+</style>
+</head>
+<body>
+
+<header id="home">
+  <h1></h1>
+  <p></p>
+</header>
+
+<nav id="nav-links"></nav>
+
+<div id="content"></div>
+
+<footer id="footer"></footer>
+
+<script>
+// بيانات الموقع (مأخوذة من YAML بعد تحويلها إلى JSON)
+const siteData = {
+  "site": {
+    "name":"عبدالإله غويث",
+    "description":"موقع شخصي لعرض نبذة عني وروابطي وأفضل الطرق للتواصل"
+  },
+  "navigation": {
+    "links":[
+      {"title":"الرئيسية","href":"#home"},
+      {"title":"نبذة عني","href":"#about"},
+      {"title":"تواصل معي","href":"#contact"},
+      {"title":"روابطي الاجتماعية","href":"#social"}
+    ]
+  },
+  "pages":[
+    {
+      "id":"about",
+      "sections":[
+        {"type":"text","heading":"نبذة عني","content":"اسمي عبدالإله غويث، أحب تطوير المواقع الإلكترونية والتصميم، وأسعى دائمًا لتعلم كل جديد في عالم التقنية."},
+        {"type":"image","src":"https://via.placeholder.com/800x300.png?text=صورة+عبدالإله+غويث","alt":"صورة عبدالإله غويث"}
+      ]
+    },
+    {
+      "id":"contact",
+      "sections":[
+        {"type":"form","heading":"نموذج التواصل","fields":[
+          {"label":"اسمك","type":"text","name":"name","required":true},
+          {"label":"بريدك الإلكتروني","type":"email","name":"email","required":true},
+          {"label":"رسالتك","type":"textarea","name":"message","required":true}
+        ], "button_text":"إرسال"}
+      ]
+    },
+    {
+      "id":"social",
+      "sections":[
+        {"type":"links","heading":"تابعوني على وسائل التواصل","links":[
+          {"platform":"Facebook","url":"https://www.facebook.com/"},
+          {"platform":"Twitter","url":"https://twitter.com/"},
+          {"platform":"LinkedIn","url":"https://www.linkedin.com/"},
+          {"platform":"Instagram","url":"https://www.instagram.com/"}
+        ]}
+      ]
+    }
+  ],
+  "footer":{"text":"© 2025 عبدالإله غويث"}
+};
+
+// تهيئة الرأس
+document.querySelector('header h1').textContent = siteData.site.name;
+document.querySelector('header p').textContent = siteData.site.description;
+
+// إنشاء روابط التنقل
+const nav = document.getElementById('nav-links');
+siteData.navigation.links.forEach(link => {
+  const a = document.createElement('a');
+  a.href = link.href;
+  a.textContent = link.title;
+  nav.appendChild(a);
+});
+
+// إنشاء الأقسام
+const contentDiv = document.getElementById('content');
+siteData.pages.forEach(page => {
+  page.sections.forEach(section => {
+    const sec = document.createElement('section');
+    sec.id = page.id;
+    if(section.type === 'text'){
+      const h2 = document.createElement('h2'); h2.textContent = section.heading; sec.appendChild(h2);
+      const p = document.createElement('p'); p.textContent = section.content; sec.appendChild(p);
+    }
+    if(section.type === 'image'){
+      const img = document.createElement('img'); img.src = section.src; img.alt = section.alt; img.className='hero-image'; sec.appendChild(img);
+    }
+    if(section.type === 'form'){
+      const h2 = document.createElement('h2'); h2.textContent = section.heading; sec.appendChild(h2);
+      const form = document.createElement('form'); form.action="#"; form.method="post";
+      section.fields.forEach(f => {
+        if(f.type==='textarea'){
+          const ta = document.createElement('textarea'); ta.name=f.name; ta.placeholder=f.label; ta.rows=5; if(f.required) ta.required=true; form.appendChild(ta);
+        }else{
+          const input = document.createElement('input'); input.type=f.type; input.name=f.name; input.placeholder=f.label; if(f.required) input.required=true; form.appendChild(input);
+        }
+      });
+      const btn = document.createElement('button'); btn.type='submit'; btn.textContent=section.button_text; form.appendChild(btn);
+      sec.appendChild(form);
+    }
+    if(section.type === 'links'){
+      const h2 = document.createElement('h2'); h2.textContent = section.heading; sec.appendChild(h2);
+      const div = document.createElement('div'); div.className='social-links';
+      section.links.forEach(l => {
+        const a = document.createElement('a'); a.href=l.url; a.target="_blank"; a.textContent=l.platform; div.appendChild(a);
+      });
+      sec.appendChild(div);
+    }
+    contentDiv.appendChild(sec);
+  });
+});
+
+// تهيئة الفوتر
+document.getElementById('footer').textContent = siteData.footer.text;
+
+// تأثير الظهور عند التمرير
+const sections = document.querySelectorAll('section');
+window.addEventListener('scroll', () => {
+    const triggerBottom = window.innerHeight / 5 * 4;
+    sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if(sectionTop < triggerBottom){
+            section.classList.add('visible');
+        }
+    });
+});
+</script>
+
+</body>
+</html>
