@@ -1,0 +1,89 @@
+site:
+  name: "عبدالإله غويث"
+  description: "موقع شخصي لعرض نبذة عني وروابطي وأفضل الطرق للتواصل"
+  language: "ar"
+  theme:
+    primary_color: "#4CAF50"
+    secondary_color: "#45A049"
+    background_color: "#f0f2f5"
+    text_color: "#333333"
+    font: "Cairo, sans-serif"
+    header_background: "linear-gradient(90deg, #4CAF50, #45A049)"
+    button_hover_color: "#388E3C"
+    shadow_color: "rgba(0,0,0,0.1)"
+    section_radius: 15px
+
+navigation:
+  sticky: true
+  links:
+    - title: "الرئيسية"
+      href: "#home"
+    - title: "نبذة عني"
+      href: "#about"
+    - title: "تواصل معي"
+      href: "#contact"
+    - title: "روابطي الاجتماعية"
+      href: "#social"
+
+pages:
+  - id: "home"
+    title: "الرئيسية"
+    sections:
+      - type: "hero"
+        heading: "مرحبا بكم في موقع عبدالإله غويث"
+        subtitle: "موقع شخصي لعرض نبذة عني وروابطي وأفضل الطرق للتواصل"
+        image: "https://via.placeholder.com/800x300.png?text=صورة+عبدالإله+غويث"
+        animation: "fadeIn"
+  - id: "about"
+    title: "نبذة عني"
+    sections:
+      - type: "text"
+        heading: "نبذة عني"
+        content: |
+          اسمي عبدالإله غويث، أحب تطوير المواقع الإلكترونية والتصميم، وأسعى دائمًا لتعلم كل جديد في عالم التقنية.
+        animation: "slideUp"
+      - type: "image"
+        src: "https://via.placeholder.com/800x300.png?text=صورة+عبدالإله+غويث"
+        alt: "صورة عبدالإله غويث"
+        animation: "zoomIn"
+  - id: "contact"
+    title: "تواصل معي"
+    sections:
+      - type: "form"
+        heading: "نموذج التواصل"
+        fields:
+          - label: "اسمك"
+            type: "text"
+            name: "name"
+            required: true
+          - label: "بريدك الإلكتروني"
+            type: "email"
+            name: "email"
+            required: true
+          - label: "رسالتك"
+            type: "textarea"
+            name: "message"
+            required: true
+        button_text: "إرسال"
+        animation: "fadeIn"
+  - id: "social"
+    title: "روابطي الاجتماعية"
+    sections:
+      - type: "links"
+        heading: "تابعوني على وسائل التواصل"
+        links:
+          - platform: "Facebook"
+            url: "https://www.facebook.com/"
+          - platform: "Twitter"
+            url: "https://twitter.com/"
+          - platform: "LinkedIn"
+            url: "https://www.linkedin.com/"
+          - platform: "Instagram"
+            url: "https://www.instagram.com/"
+        animation: "slideUp"
+
+footer:
+  text: "© 2025 عبدالإله غويث"
+  background_color: "#333333"
+  text_color: "#ffffff"
+  padding: 20px
