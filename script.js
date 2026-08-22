@@ -859,8 +859,6 @@ function createCommentHTML(comment) {
 
 // نظام التعليقات الصوتية المتطور
 let audioContext = null;
-let mediaRecorder = null;
-let recordedChunks = [];
 let recordingStartTime = null;
 let recordingTimer = null;
 

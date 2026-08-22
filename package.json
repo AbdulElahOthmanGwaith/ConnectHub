@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx http-server -p 8080 -o",
     "build": "echo 'No build step required for pure HTML/CSS/JS'",
-    "test": "echo 'No tests specified'",
+    "test": "node tests/interaction-regression.cjs",
     "deploy": "gh-pages -d ."
   },
   "keywords": [

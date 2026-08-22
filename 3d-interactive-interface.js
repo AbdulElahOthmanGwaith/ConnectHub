@@ -141,11 +141,11 @@ class Security3DInterface {
             },
             
             rotate: (deltaX, deltaY) => {
-                this.spherical.theta -= deltaX * this.controls.rotateSpeed;
-                this.spherical.phi += deltaY * this.controls.rotateSpeed;
-                this.spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, this.spherical.phi));
+                this.controls.spherical.theta -= deltaX * this.controls.rotateSpeed;
+                this.controls.spherical.phi += deltaY * this.controls.rotateSpeed;
+                this.controls.spherical.phi = Math.max(0.1, Math.min(Math.PI - 0.1, this.controls.spherical.phi));
                 
-                const pos = new THREE.Vector3().setFromSpherical(this.spherical);
+                const pos = new THREE.Vector3().setFromSpherical(this.controls.spherical);
                 this.camera.position.copy(pos);
             },
             
