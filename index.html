@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConnectHub - منصة التواصل الاجتماعي المتقدمة</title>
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="منصة تواصل اجتماعي عربية متعددة اللغات">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="connecthub-mobile.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -21,6 +27,7 @@
             <div class="login-form">
                 <input type="text" id="loginEmail" data-translate-placeholder="email_placeholder" placeholder="البريد الإلكتروني أو رقم الهاتف">
                 <input type="password" id="loginPassword" data-translate-placeholder="password_placeholder" placeholder="كلمة المرور">
+                <div id="authMessage" role="status" aria-live="polite" style="display:none; margin:10px 0; color:#b42318;"></div>
                 <button onclick="login()" class="login-btn" data-translate="login_btn">تسجيل الدخول</button>
                 <a href="#" class="forgot-password" data-translate="forgot_password">هل نسيت كلمة المرور؟</a>
                 <hr>
@@ -287,5 +294,13 @@
 
     <script src="translations.js"></script>
     <script src="script.js"></script>
+    <script src="supabase-config.js"></script>
+    <script type="module" src="supabase-auth.js"></script>
+    <script src="connecthub-phase01.js"></script>
+    <script>
+      if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+        navigator.serviceWorker.register('./sw.js', {scope: './'}).catch(() => {});
+      }
+    </script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+/* ConnectHub mobile-first overrides. Loaded after the legacy styles. */
+html, body { min-width: 320px; }
+button, input, textarea { font: inherit; }
+button, .nav-icon, .sidebar-item, .post-option { min-height: 44px; }
+@media (max-width: 767px) {
+  .login-box, .signup-box { width: calc(100% - 32px); padding: 28px 20px; }
+  .login-header h1 { font-size: 34px; }
+  .login-header p { font-size: 16px; }
+  .navbar { padding: 8px 12px; flex-wrap: wrap; gap: 8px; }
+  .nav-left { flex: 1 1 100%; justify-content: space-between; }
+  .nav-center { order: 3; flex: 1 1 100%; justify-content: space-around; }
+  .nav-right { position: absolute; top: 8px; inset-inline-end: 10px; }
+  .search-box { display: none; }
+  .logo-text { font-size: 18px; }
+  .main-content { display: block; padding: 10px; }
+  .left-sidebar, .right-sidebar { display: none; }
+  .center-content { width: 100%; max-width: none; }
+  .create-post, .post, .friends-page { border-radius: 12px; margin-bottom: 12px; }
+  .create-post-bottom { gap: 4px; }
+  .post-option { font-size: 12px; padding: 8px 4px; }
+  .modal-content { width: calc(100% - 24px); max-height: 90vh; overflow: auto; }
+  .friends-tabs { overflow-x: auto; white-space: nowrap; }
+  .tab-btn { min-width: 130px; }
+}
+@media (min-width: 768px) {
+  .navbar { position: sticky; top: 0; z-index: 10; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

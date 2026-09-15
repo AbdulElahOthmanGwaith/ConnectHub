@@ -1,5 +1,11 @@
 // متغيرات عامة
 let currentUser = null;
+window.setConnectHubCurrentUser = user => { currentUser = user; };
+function escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>'"]/g, character => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+    }[character]));
+}
 let posts = [];
 let postIdCounter = 1;
 let friends = [];
@@ -122,7 +128,8 @@ function generateContentSuggestion(originalText, issues) {
 
 // تحميل البيانات من localStorage
 function loadData() {
-    const savedUser = localStorage.getItem('currentUser');
+    const supabaseConfigured = Boolean(window.CONNECTHUB_SUPABASE_CONFIG?.url && window.CONNECTHUB_SUPABASE_CONFIG?.publishableKey);
+    const savedUser = supabaseConfigured ? null : localStorage.getItem('currentUser');
     const savedPosts = localStorage.getItem('posts');
     const savedFriends = localStorage.getItem('friends');
     const savedRequests = localStorage.getItem('friendRequests');
@@ -190,7 +197,9 @@ function loadData() {
 
 // حفظ البيانات في localStorage
 function saveData() {
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    if (!(window.CONNECTHUB_SUPABASE_CONFIG?.url && window.CONNECTHUB_SUPABASE_CONFIG?.publishableKey)) {
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
     localStorage.setItem('posts', JSON.stringify(posts));
     localStorage.setItem('friends', JSON.stringify(friends));
     localStorage.setItem('friendRequests', JSON.stringify(friendRequests));
@@ -445,9 +454,9 @@ function displayFriends() {
         const friendElement = document.createElement('div');
         friendElement.className = 'friend-item';
         friendElement.innerHTML = `
-            <img src="${friend.avatar}" alt="${friend.name}">
+            <img src="${escapeHTML(friend.avatar)}" alt="${escapeHTML(friend.name)}">
             <div class="friend-info">
-                <div class="friend-name">${friend.name}</div>
+                <div class="friend-name">${escapeHTML(friend.name)}</div>
                 <div class="mutual-friends">${t('friend') || 'صديق'}</div>
             </div>
             <div class="friend-actions">
@@ -467,9 +476,9 @@ function displaySuggestedFriends() {
         const suggestionElement = document.createElement('div');
         suggestionElement.className = 'friend-item';
         suggestionElement.innerHTML = `
-            <img src="${suggestion.avatar}" alt="${suggestion.name}">
+            <img src="${escapeHTML(suggestion.avatar)}" alt="${escapeHTML(suggestion.name)}">
             <div class="friend-info">
-                <div class="friend-name">${suggestion.name}</div>
+                <div class="friend-name">${escapeHTML(suggestion.name)}</div>
                 <div class="mutual-friends">${suggestion.mutualFriends} ${t('mutual_friends') || 'أصدقاء مشتركين'}</div>
             </div>
             <div class="friend-actions">
@@ -548,8 +557,8 @@ function displayOnlineFriends() {
         const contactElement = document.createElement('div');
         contactElement.className = 'contact-item';
         contactElement.innerHTML = `
-            <img src="${friend.avatar}" alt="${friend.name}">
-            <span>${friend.name}</span>
+            <img src="${escapeHTML(friend.avatar)}" alt="${escapeHTML(friend.name)}">
+            <span>${escapeHTML(friend.name)}</span>
             <div class="online-indicator"></div>
         `;
         container.appendChild(contactElement);
@@ -626,7 +635,7 @@ function displayNotifications() {
                 <i class="fas fa-user-friends"></i>
             </div>
             <div class="notification-content">
-                <div class="notification-text">${notification.message}</div>
+                <div class="notification-text">${escapeHTML(notification.message)}</div>
                 <div class="notification-time">${formatTime(notification.time)}</div>
             </div>
         `;
@@ -771,8 +780,8 @@ function createPostElement(post) {
         <div class="post-header">
             <img src="https://via.placeholder.com/40x40" alt="Profile">
             <div class="post-info">
-                <h4>${post.author}</h4>
-                <span class="post-time">${post.time}</span>
+                <h4>${escapeHTML(post.author)}</h4>
+                <span class="post-time">${escapeHTML(post.time)}</span>
             </div>
             <div class="post-menu">
                 <button class="post-menu-btn" onclick="showPostMenu(${post.id}, event)">
@@ -781,7 +790,7 @@ function createPostElement(post) {
             </div>
         </div>
         <div class="post-content">
-            ${post.content}
+            ${escapeHTML(post.content)}
         </div>
         <div class="post-actions">
             <button class="action-btn ${post.liked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
@@ -849,8 +858,8 @@ function createCommentHTML(comment) {
             <div class="comment">
                 <img src="https://via.placeholder.com/32x32" alt="Profile">
                 <div class="comment-content">
-                    <div class="comment-author">${comment.author}</div>
-                    <div class="comment-text">${comment.text}</div>
+                <div class="comment-author">${escapeHTML(comment.author)}</div>
+                <div class="comment-text">${escapeHTML(comment.text)}</div>
                 </div>
             </div>
         `;
